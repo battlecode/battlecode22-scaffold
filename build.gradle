@@ -52,7 +52,7 @@ if (!project.hasProperty("classLocation")) {
     ext.classLocation = sourceSets.main.output.classesDirs.getAsPath()
 }
 if (!project.hasProperty("replay")) {
-    ext.replay = 'matches/' + project.property('teamA') + '-vs-' + project.property('teamB') + '-on-' + project.property('maps') + '.bc21'
+    ext.replay = 'matches/' + project.property('teamA') + '-vs-' + project.property('teamB') + '-on-' + project.property('maps') + '.bc22'
 }
 
 // Mark the client as a special dependency, so that we can handle it separately.
@@ -63,14 +63,14 @@ configurations {
 
 // Download a different version of the client depending on the local OS.
 def os = System.getProperty("os.name").toLowerCase()
-def clientName = os.startsWith('windows') ? 'battlecode21-client-win' :
-                 os.startsWith('mac') ? 'battlecode21-client-mac' :
-                 'battlecode21-client-linux'
+def clientName = os.startsWith('windows') ? 'battlecode22-client-win' :
+                 os.startsWith('mac') ? 'battlecode22-client-mac' :
+                 'battlecode22-client-linux'
 
 // The dependencies of this project.
 dependencies {
     // The Battlecode engine.
-    implementation group: 'org.battlecode', name: 'battlecode21', version: versions.battlecode
+    implementation group: 'org.battlecode', name: 'battlecode22', version: versions.battlecode
 
     // The Battlecode client.
     client group: 'org.battlecode', name: clientName, version: versions.battlecode
@@ -115,7 +115,7 @@ repositories {
 
 static String getVersionFromWeb() {
     
-    String[] urls = ["https://2021.battlecode.org/version.txt", "https://battlecode.org/2021version.txt"]
+    String[] urls = ["https://play.battlecode.org/version.txt"]
     String version = null
 
     for (String url in urls) {
@@ -285,13 +285,13 @@ task listMaps {
 
     doLast {
         sourceSets.main.compileClasspath.each {
-            if (it.toString().contains('battlecode21-2021')) {
+            if (it.toString().contains('battlecode22-2022')) {
                 FileCollection fc = zipTree(it)
                 fc += fileTree(new File(project.projectDir, 'maps'))
                 fc.each {
                     String fn = it.getName()
-                    if (fn.endsWith('.map21')) {
-                        println 'MAP: '+fn.substring(0, fn.indexOf('.map21'))
+                    if (fn.endsWith('.map22')) {
+                        println 'MAP: '+fn.substring(0, fn.indexOf('.map22'))
                     }
                 }
             }
@@ -308,9 +308,9 @@ if (System.getProperty("os.arch").matches("^(x8632|x86|i[3-6]86|ia32|x32)\$")) a
 
 
 if (arch32) {
-    def client32Name = os.startsWith('windows') ? 'battlecode21-client-win-32' :
+    def client32Name = os.startsWith('windows') ? 'battlecode22-client-win-32' :
             os.startsWith('mac') ? 'UNSUPPORTED' :
-                    'battlecode21-client-linux-32'
+                    'battlecode22-client-linux-32'
 
     if (clientName.equals('UNSUPPORTED')) {
         println 'Sorry, the Battlecode client does not support 32-bit architectures for OS X.'
