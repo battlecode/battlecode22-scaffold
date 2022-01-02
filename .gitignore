@@ -1,12 +1,11 @@
 dist/*
 build/*
-src/lectureplayer
 
 /matches
 /deploy/lib
 /deploy/bin
 *.rms
-*.bc17
+*.bc22
 /build/
 /bin/
 *.conf
@@ -30,5 +29,3 @@ battlecode-scaffold.iws
 .classpath
 .project
 .settings/
-
-access.txt
