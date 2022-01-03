@@ -115,7 +115,7 @@ repositories {
 
 static String getVersionFromWeb() {
     
-    String[] urls = ["https://play.battlecode.org/version.txt"]
+    String[] urls = ["https://play.battlecode.org/versions/2022/version.txt"]
     String version = null
 
     for (String url in urls) {
