@@ -194,7 +194,8 @@ build.dependsOn('unpackClient')
 // These properties can be set in the command line with:
 // On Windows cmd:
 //   `gradlew -PteamA=<team A bot> -PteamB=<team B bot> -Pmaps=<comma
-//   separated list of maps> -Preplay=<destination> -PclassLocation=<where the packages are stored>`
+//    separated list of maps> -Preplay=<destination> -PclassLocationA=<where the packages for team A are stored>`
+//    -PclassLocationB=<where the packages for team B are stored>`
 // On Powershell, OS X, and Linux:
 //   `./gradlew -PteamA=<team A bot> -PteamB=<team B bot> -Pmaps=<comma
 //   separated list of maps>`
@@ -215,15 +216,15 @@ task run(type: JavaExec, dependsOn: 'build') {
         '-Dbc.engine.enable-profiler='+project.property('profilerEnabled'),
         '-Dbc.game.team-a='+project.property('teamA'),
         '-Dbc.game.team-b='+project.property('teamB'),
-        '-Dbc.game.team-a.url='+project.property('classLocation'),
-        '-Dbc.game.team-b.url='+project.property('classLocation'),
+        '-Dbc.game.team-a.url='+project.property('classLocationA'),
+        '-Dbc.game.team-b.url='+project.property('classLocationB'),
         '-Dbc.game.maps='+project.property('maps'),
         '-Dbc.server.save-file=' +project.property('replay')
     ]
 }
 
 task runFromSaturn(type: JavaExec, dependsOn: 'build') {
-    description 'Runs a match without starting the client.'
+    description 'Runs a match with settings desired by Saturn.'
     group 'battlecode'
 
     main = 'battlecode.server.Main'
@@ -263,8 +264,8 @@ task runFromClient(type: JavaExec, dependsOn: 'build') {
             '-Dbc.engine.enable-profiler='+project.property('profilerEnabled'),
             '-Dbc.game.team-a='+project.property('teamA'),
             '-Dbc.game.team-b='+project.property('teamB'),
-            '-Dbc.game.team-a.url='+project.property('classLocation'),
-            '-Dbc.game.team-b.url='+project.property('classLocation'),
+            '-Dbc.game.team-a.url='+project.property('classLocationA'),
+            '-Dbc.game.team-b.url='+project.property('classLocationB'),
             '-Dbc.game.maps='+project.property('maps'),
             '-Dbc.server.save-file=' + project.property('replay')
     ]
@@ -284,8 +285,8 @@ task runDebug(type: JavaExec, dependsOn: 'build') {
             '-Dbc.engine.enable-profiler='+project.property('profilerEnabled'),
             '-Dbc.game.team-a='+project.property('teamA'),
             '-Dbc.game.team-b='+project.property('teamB'),
-            '-Dbc.game.team-a.url='+project.property('classLocation'),
-            '-Dbc.game.team-b.url='+project.property('classLocation'),
+            '-Dbc.game.team-a.url='+project.property('classLocationA'),
+            '-Dbc.game.team-b.url='+project.property('classLocationB'),
             '-Dbc.game.maps='+project.property('maps'),
             '-Dbc.server.save-file=' + project.property('replay')
     ]
