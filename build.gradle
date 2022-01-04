@@ -48,8 +48,11 @@ sourceSets {
 
 //Setting default output directories for compiled classes and generated replay files
 //For other default properties, see gradle.properties
-if (!project.hasProperty("classLocation")) {
-    ext.classLocation = sourceSets.main.output.classesDirs.getAsPath()
+if (!project.hasProperty("classLocationA")) {
+    ext.classLocationA = sourceSets.main.output.classesDirs.getAsPath()
+}
+if (!project.hasProperty("classLocationB")) {
+    ext.classLocationB = sourceSets.main.output.classesDirs.getAsPath()
 }
 if (!project.hasProperty("replay")) {
     ext.replay = 'matches/' + project.property('teamA') + '-vs-' + project.property('teamB') + '-on-' + project.property('maps') + '.bc22'
@@ -188,7 +191,8 @@ build.dependsOn('unpackClient')
 // These properties can be set in the command line with:
 // On Windows cmd:
 //   `gradlew -PteamA=<team A bot> -PteamB=<team B bot> -Pmaps=<comma
-//   separated list of maps> -Preplay=<destination> -PclassLocation=<where the packages are stored>`
+//    separated list of maps> -Preplay=<destination> -PclassLocationA=<where the packages for team A are stored>`
+//    -PclassLocationB=<where the packages for team B are stored>`
 // On Powershell, OS X, and Linux:
 //   `./gradlew -PteamA=<team A bot> -PteamB=<team B bot> -Pmaps=<comma
 //   separated list of maps>`
@@ -209,12 +213,13 @@ task run(type: JavaExec, dependsOn: 'build') {
         '-Dbc.engine.enable-profiler='+project.property('profilerEnabled'),
         '-Dbc.game.team-a='+project.property('teamA'),
         '-Dbc.game.team-b='+project.property('teamB'),
-        '-Dbc.game.team-a.url='+project.property('classLocation'),
-        '-Dbc.game.team-b.url='+project.property('classLocation'),
+        '-Dbc.game.team-a.url='+project.property('classLocationA'),
+        '-Dbc.game.team-b.url='+project.property('classLocationB'),
         '-Dbc.game.maps='+project.property('maps'),
         '-Dbc.server.save-file=' +project.property('replay')
     ]
 }
+
 task runFromClient(type: JavaExec, dependsOn: 'build') {
     main = 'battlecode.server.Main'
     classpath = project.sourceSets.main.runtimeClasspath
@@ -229,8 +234,8 @@ task runFromClient(type: JavaExec, dependsOn: 'build') {
             '-Dbc.engine.enable-profiler='+project.property('profilerEnabled'),
             '-Dbc.game.team-a='+project.property('teamA'),
             '-Dbc.game.team-b='+project.property('teamB'),
-            '-Dbc.game.team-a.url='+project.property('classLocation'),
-            '-Dbc.game.team-b.url='+project.property('classLocation'),
+            '-Dbc.game.team-a.url='+project.property('classLocationA'),
+            '-Dbc.game.team-b.url='+project.property('classLocationB'),
             '-Dbc.game.maps='+project.property('maps'),
             '-Dbc.server.save-file=' + project.property('replay')
     ]
@@ -250,8 +255,8 @@ task runDebug(type: JavaExec, dependsOn: 'build') {
             '-Dbc.engine.enable-profiler='+project.property('profilerEnabled'),
             '-Dbc.game.team-a='+project.property('teamA'),
             '-Dbc.game.team-b='+project.property('teamB'),
-            '-Dbc.game.team-a.url='+project.property('classLocation'),
-            '-Dbc.game.team-b.url='+project.property('classLocation'),
+            '-Dbc.game.team-a.url='+project.property('classLocationA'),
+            '-Dbc.game.team-b.url='+project.property('classLocationB'),
             '-Dbc.game.maps='+project.property('maps'),
             '-Dbc.server.save-file=' + project.property('replay')
     ]
