@@ -224,7 +224,7 @@ task runFromClient(type: JavaExec, dependsOn: 'build') {
             '-Dbc.server.mode=headless',
             '-Dbc.server.map-path=maps',
             '-Dbc.server.debug=false',
-            '-Dbc.server.robot-player-to-system-out=false',
+            '-Dbc.server.robot-player-to-system-out='+project.property('outputVerbose'),
             '-Dbc.engine.debug-methods=true',
             '-Dbc.engine.enable-profiler='+project.property('profilerEnabled'),
             '-Dbc.game.team-a='+project.property('teamA'),
