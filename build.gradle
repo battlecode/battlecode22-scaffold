@@ -232,6 +232,9 @@ task runFromSaturn(type: JavaExec, dependsOn: 'build') {
     jvmArgs = [
         '-Dbc.server.mode=headless',
         '-Dbc.server.map-path=maps',
+        // System output in logs slows matchrunning and makes server logs uninterpretable.
+        // Can view game "logs" from client anyways.
+        // (Also has side benefit of not revealing print statements to competitors on accident)
         '-Dbc.server.robot-player-to-system-out=false',
         '-Dbc.server.debug=true',
         '-Dbc.engine.debug-methods=true',
