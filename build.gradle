@@ -203,7 +203,7 @@ task run(type: JavaExec, dependsOn: 'build') {
     jvmArgs = [
         '-Dbc.server.mode=headless',
         '-Dbc.server.map-path=maps',
-        '-Dbc.server.robot-player-to-system-out=false',
+        '-Dbc.server.robot-player-to-system-out='+project.property('outputVerbose'),
         '-Dbc.server.debug=true',
         '-Dbc.engine.debug-methods=true',
         '-Dbc.engine.enable-profiler='+project.property('profilerEnabled'),
