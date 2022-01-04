@@ -220,6 +220,32 @@ task run(type: JavaExec, dependsOn: 'build') {
     ]
 }
 
+task runFromSaturn(type: JavaExec, dependsOn: 'build') {
+    description 'Runs a match without starting the client.'
+    group 'battlecode'
+
+    main = 'battlecode.server.Main'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['-c=-']
+    jvmArgs = [
+        '-Dbc.server.mode=headless',
+        '-Dbc.server.map-path=maps',
+        '-Dbc.server.robot-player-to-system-out=false',
+        '-Dbc.server.debug=false',
+        '-Dbc.engine.debug-methods=true',
+        '-Dbc.engine.show-indicators=false',
+        '-Dbc.engine.enable-profiler='+project.property('profilerEnabled'),
+        '-Dbc.game.team-a='+project.property('teamA'),
+        '-Dbc.game.team-b='+project.property('teamB'),
+        '-Dbc.game.team-a.url='+project.property('classLocationA'),
+        '-Dbc.game.team-b.url='+project.property('classLocationB'),
+        '-Dbc.game.team-a.package='+project.property('packageNameA'),
+        '-Dbc.game.team-b.package='+project.property('packageNameB'),
+        '-Dbc.game.maps='+project.property('maps'),
+        '-Dbc.server.save-file=' +project.property('replay')
+    ]
+}
+
 task runFromClient(type: JavaExec, dependsOn: 'build') {
     main = 'battlecode.server.Main'
     classpath = project.sourceSets.main.runtimeClasspath
